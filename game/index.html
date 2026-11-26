@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>Archipelago Run — a bush-plane island hop</title>
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAO0lEQVR42mMUS+pnIAUwMZAISNbAgin0Mv86nC0+UZPuTqKGHzDdTQ0b7tTKE1Sq0vxwUIcSxH2Dw0kAdvsJiBCm2uMAAAAASUVORK5CYII=">
+  <style>
+    :root { color-scheme: dark; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #060f16;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #stage {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    }
+    #game {
+      display: block;
+      width: 1280px;
+      height: 720px;
+      background: #0b3f6b;
+      cursor: crosshair;
+      touch-action: none;
+    }
+    #loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cfe6f5;
+      letter-spacing: 0.22em;
+      font-size: 13px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game" width="1280" height="720" aria-label="Archipelago Run flight view"></canvas>
+    <div id="loading">WARMING UP THE ENGINE</div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+  <script>
+    // The loading line goes away once the first frame is on the canvas.
+    addEventListener('load', () => {
+      const tick = () => {
+        if (document.body.dataset.ready === 'true') {
+          const el = document.getElementById('loading');
+          if (el) el.remove();
+        } else {
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
+    });
+  </script>
+</body>
+</html>
